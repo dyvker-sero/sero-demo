@@ -1,137 +1,176 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SERO · Diagnóstico de Bienestar Laboral</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Bricolage+Grotesque:wght@500;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Bricolage+Grotesque:wght@400;600;700;800&display=swap');
-:root{--g:#1DB954;--gh:#1ed760;--gdim:rgba(29,185,84,.10);--gglow:rgba(29,185,84,.22);--bg:#0d0d0d;--s1:#141414;--s2:#1c1c1c;--s3:#242424;--s4:#2e2e2e;--t1:#f2f2f0;--t2:#a8a8a2;--t3:#5c5c58;--t4:#383836;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.12);--amber:#f59e0b;--red:#ef4444;--blue:#60a5fa;--violet:#a78bfa;--r:12px;--r2:8px;--rp:100px;--fh:'Bricolage Grotesque',sans-serif;--fb:'Inter',sans-serif}
+:root{
+  --g:#1DB954;--gh:#22d45f;--gdim:rgba(29,185,84,.10);--gglow:rgba(29,185,84,.20);
+  --bg:#0a0a0a;--s1:#111;--s2:#181818;--s3:#222;--s4:#2a2a2a;
+  --t1:#f0f0ee;--t2:#a0a09a;--t3:#585854;--t4:#323230;
+  --line:rgba(255,255,255,.06);--line2:rgba(255,255,255,.11);
+  --amber:#f59e0b;--red:#ef4444;--blue:#60a5fa;--violet:#a78bfa;
+  --r:12px;--r2:8px;--rp:100px;
+  --fh:'Bricolage Grotesque',sans-serif;--fb:'Inter',sans-serif;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--fb);background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;min-height:100vh}
-.scr{display:none}
-.scr.on{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 20px;animation:fup .4s ease both}
-@keyframes fup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.logo{font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:5px;color:var(--g);text-transform:uppercase;display:block;margin-bottom:28px;text-align:center}
-.btn-p{width:100%;background:var(--g);color:#000;border:none;border-radius:var(--r);padding:14px 20px;font-family:var(--fh);font-size:14px;font-weight:700;cursor:pointer;letter-spacing:.2px;transition:background .15s,transform .1s,opacity .2s;display:flex;align-items:center;justify-content:center;gap:7px}
-.btn-p:hover{background:var(--gh)}.btn-p:active{transform:scale(.98)}.btn-p:disabled{opacity:.25;cursor:default}
+html{height:100%;scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:var(--t1);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-/* REGISTER */
-#sr{background:radial-gradient(ellipse 90% 55% at 50% -5%,rgba(29,185,84,.13) 0%,transparent 65%),var(--bg)}
-.reg-wrap{width:100%;max-width:380px}
-.reg-wrap h1{font-family:var(--fh);font-size:clamp(28px,7vw,40px);font-weight:800;line-height:1.05;letter-spacing:-.5px;margin-bottom:10px;text-align:center}
-.reg-wrap h1 em{color:var(--g);font-style:normal}
-.reg-wrap .sub{font-size:13px;color:var(--t2);text-align:center;line-height:1.6;font-weight:300;margin-bottom:30px}
+/* ── SCREENS ── */
+.scr{display:none}
+.scr.on{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:28px 16px 40px;animation:fup .4s ease both}
+@keyframes fup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── LOGO SVG ── */
+.sero-logo{display:block;margin:0 auto 28px}
+
+/* ── SHARED ── */
+.btn-p{width:100%;background:var(--g);color:#000;border:none;border-radius:var(--r);padding:14px 20px;font-family:var(--fh);font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.2px;transition:background .15s,transform .1s,opacity .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-p:hover{background:var(--gh)}.btn-p:active{transform:scale(.98)}.btn-p:disabled{opacity:.25;cursor:default}
 .field{margin-bottom:10px}
 .field label{display:block;font-size:10px;font-weight:600;letter-spacing:1px;color:var(--t3);text-transform:uppercase;margin-bottom:5px}
-.field input{width:100%;background:var(--s2);border:.5px solid var(--line2);border-radius:var(--r2);padding:12px 14px;font-size:14px;color:var(--t1);font-family:var(--fb);outline:none;transition:border-color .2s}
+.field input{width:100%;background:var(--s2);border:.5px solid var(--line2);border-radius:var(--r2);padding:13px 14px;font-size:14px;color:var(--t1);font-family:var(--fb);outline:none;transition:border-color .2s;-webkit-appearance:none}
 .field input:focus{border-color:var(--g)}.field input::placeholder{color:var(--t4)}
+
+/* ════════════════════════
+   REGISTER
+════════════════════════ */
+#sr{background:radial-gradient(ellipse 100% 50% at 50% -5%,rgba(29,185,84,.13) 0%,transparent 65%),var(--bg)}
+.reg-card{width:100%;max-width:380px}
+.reg-card h1{font-family:var(--fh);font-size:clamp(26px,8vw,40px);font-weight:800;line-height:1.05;letter-spacing:-.5px;margin-bottom:10px;text-align:center}
+.reg-card h1 em{color:var(--g);font-style:normal}
+.reg-card .sub{font-size:13px;color:var(--t2);text-align:center;line-height:1.6;font-weight:300;margin-bottom:28px}
 .reg-note{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--t3);margin:12px 0 18px}
 
-/* QUESTIONS */
-#sq{padding:0;justify-content:flex-start;align-items:stretch}
-.qtop{background:var(--s1);border-bottom:.5px solid var(--line);padding:13px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.qtop .logo{margin:0;letter-spacing:4px;text-align:left}
-.qmeta{display:flex;align-items:center;gap:14px}
+/* ════════════════════════
+   QUESTIONS
+════════════════════════ */
+#sq{padding:0;justify-content:flex-start;align-items:stretch;min-height:100vh}
+.qtop{background:var(--s1);border-bottom:.5px solid var(--line);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.qmeta{display:flex;align-items:center;gap:12px}
 .qmi{font-size:11px;color:var(--t3);display:flex;align-items:center;gap:4px}
 .qmi b{color:var(--t1);font-weight:600}
 .prog-r{height:2px;background:var(--s3);flex-shrink:0}
-.prog-f{height:2px;background:var(--g);transition:width .6s cubic-bezier(.4,0,.2,1)}
-.qstage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 18px 14px;max-width:460px;margin:0 auto;width:100%}
-.qcat{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--g);margin-bottom:16px;align-self:flex-start}
+.prog-f{height:2px;background:var(--g);transition:width .5s cubic-bezier(.4,0,.2,1)}
+.qstage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px 12px;max-width:440px;margin:0 auto;width:100%}
+.qcat{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--g);margin-bottom:14px;align-self:flex-start}
 .qcnt{font-size:11px;color:var(--t3);margin-bottom:8px;align-self:flex-start}
-.card-area{width:100%;margin-bottom:18px;position:relative}
+.card-area{width:100%;margin-bottom:16px;position:relative}
 .xpp{position:absolute;top:0;left:50%;transform:translateX(-50%);background:var(--g);color:#000;font-family:var(--fh);font-size:11px;font-weight:700;padding:4px 10px;border-radius:var(--rp);opacity:0;transition:opacity .25s,top .3s;pointer-events:none;white-space:nowrap;z-index:5}
 .xpp.show{opacity:1;top:8px}
-.qcard{background:var(--s1);border:.5px solid var(--line2);border-radius:var(--r);padding:22px 20px;text-align:center;transition:transform .3s cubic-bezier(.4,0,.2,1),opacity .26s}
-.qcard.enter{transform:translateX(0) scale(1);opacity:1}.qcard.fr{transform:translateX(46px) scale(.96);opacity:0}.qcard.fl{transform:translateX(-110%) rotate(-6deg);opacity:0}
-.qcard h2{font-family:var(--fh);font-size:clamp(15px,3.5vw,19px);font-weight:700;line-height:1.35;color:var(--t1);margin-bottom:7px;letter-spacing:-.1px}
+.qcard{background:var(--s1);border:.5px solid var(--line2);border-radius:var(--r);padding:20px 18px;text-align:center;transition:transform .3s cubic-bezier(.4,0,.2,1),opacity .26s}
+.qcard.enter{transform:translateX(0) scale(1);opacity:1}.qcard.fr{transform:translateX(44px) scale(.96);opacity:0}.qcard.fl{transform:translateX(-110%) rotate(-5deg);opacity:0}
+.qcard h2{font-family:var(--fh);font-size:clamp(15px,4vw,19px);font-weight:700;line-height:1.35;color:var(--t1);margin-bottom:7px;letter-spacing:-.1px}
 .qcard p{font-size:12px;color:var(--t2);font-weight:300;line-height:1.5}
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:7px;width:100%;margin-bottom:12px}
-.opt{background:var(--s2);border:.5px solid var(--line2);border-radius:var(--r2);padding:12px 9px;font-size:12px;font-weight:400;color:var(--t2);cursor:pointer;text-align:center;transition:all .15s;font-family:var(--fb);line-height:1.3}
-.opt:hover{background:var(--s3);border-color:var(--t3);color:var(--t1)}.opt.sel{background:var(--gdim);border-color:var(--g);color:var(--g);font-weight:600}.opt:active{transform:scale(.97)}
-.qftr{display:none;align-items:center;justify-content:space-between;padding:0 18px 18px;max-width:460px;margin:0 auto;width:100%;flex-shrink:0}
-.skip{font-size:11px;color:var(--t3);background:none;border:none;cursor:pointer;font-family:var(--fb)}
-.skip:hover{color:var(--t2)}
-.nxt{background:var(--g);color:#000;border:none;border-radius:var(--r2);padding:10px 22px;font-family:var(--fh);font-size:13px;font-weight:700;cursor:pointer;opacity:.22;pointer-events:none;transition:opacity .2s,transform .1s}
+.opt{background:var(--s2);border:.5px solid var(--line2);border-radius:var(--r2);padding:12px 8px;font-size:12px;font-weight:400;color:var(--t2);cursor:pointer;text-align:center;transition:all .15s;font-family:var(--fb);line-height:1.3;-webkit-tap-highlight-color:transparent}
+.opt:hover,.opt:active{background:var(--s3);border-color:var(--t3);color:var(--t1)}.opt.sel{background:var(--gdim);border-color:var(--g);color:var(--g);font-weight:600}
+.qftr{display:none;align-items:center;justify-content:space-between;padding:0 16px 16px;max-width:440px;margin:0 auto;width:100%;flex-shrink:0}
+.skip{font-size:11px;color:var(--t3);background:none;border:none;cursor:pointer;font-family:var(--fb);padding:8px 0}
+.nxt{background:var(--g);color:#000;border:none;border-radius:var(--r2);padding:11px 22px;font-family:var(--fh);font-size:13px;font-weight:700;cursor:pointer;opacity:.22;pointer-events:none;transition:opacity .2s,transform .1s;-webkit-tap-highlight-color:transparent}
 .nxt.on{opacity:1;pointer-events:all}.nxt:active{transform:scale(.97)}
 
-/* RESULT */
-#sres{background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(29,185,84,.08) 0%,transparent 58%),var(--bg);justify-content:flex-start;padding:32px 20px 48px;align-items:center}
+/* ════════════════════════
+   RESULT
+════════════════════════ */
+#sres{background:radial-gradient(ellipse 90% 50% at 50% 0%,rgba(29,185,84,.08) 0%,transparent 55%),var(--bg);justify-content:flex-start;padding:28px 16px 48px;align-items:center}
 .res-wrap{width:100%;max-width:400px}
-.res-top{text-align:center;margin-bottom:24px}
-.res-ring{width:64px;height:64px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center}
+.res-top{text-align:center;margin-bottom:22px}
+.res-ring{width:60px;height:60px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center}
 .res-greet{font-size:11px;font-weight:500;color:var(--t2);letter-spacing:.5px;margin-bottom:4px}
-.res-lvl{font-family:var(--fh);font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:5px}
-.res-xp{font-size:11px;color:var(--t3);margin-bottom:9px}
+.res-lvl{font-family:var(--fh);font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:5px}
+.res-xp{font-size:11px;color:var(--t3);margin-bottom:8px}
 .res-desc{font-size:13px;color:var(--t2);line-height:1.65;font-weight:300}
 .slbl{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--t3);margin-bottom:9px}
-.pcard{background:var(--s1);border:.5px solid var(--line);border-radius:var(--r2);padding:12px 13px;margin-bottom:6px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:border-color .15s,background .15s}
+.pcard{background:var(--s1);border:.5px solid var(--line);border-radius:var(--r2);padding:13px 14px;margin-bottom:7px;display:flex;align-items:center;gap:12px;text-decoration:none;transition:border-color .15s,background .15s;cursor:pointer}
 .pcard:hover{background:var(--s2);border-color:var(--line2)}
-.pdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.pname{font-family:var(--fh);font-size:13px;font-weight:600;color:var(--t1)}
-.psub{font-size:11px;color:var(--t3);margin-top:1px}
+.pdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.pname{font-family:var(--fh);font-size:13px;font-weight:700;color:var(--t1)}
+.psub{font-size:11px;color:var(--t3);margin-top:2px}
 .ptag{margin-left:auto;font-size:9px;font-weight:600;padding:3px 7px;border-radius:var(--rp);flex-shrink:0;background:var(--gdim);color:var(--g)}
+.plink-arrow{font-size:14px;color:var(--t3);flex-shrink:0;margin-left:4px}
 .nom-box{background:var(--s2);border:.5px solid var(--line);border-radius:var(--r2);padding:12px 14px;margin:14px 0}
 .nom-t{font-size:10px;font-weight:600;letter-spacing:.8px;color:var(--t3);text-transform:uppercase;margin-bottom:3px}
 .nom-v{font-size:12px;color:var(--t2)}.nom-n{font-size:11px;color:var(--t3);margin-top:3px;line-height:1.4}
-.dash-btn{width:100%;background:var(--s2);border:.5px solid var(--line2);border-radius:var(--r);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-top:18px;transition:background .15s,border-color .15s}
+.dash-btn{width:100%;background:var(--s2);border:.5px solid var(--line2);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-top:18px;transition:background .15s,border-color .15s;-webkit-tap-highlight-color:transparent}
 .dash-btn:hover{background:var(--s3);border-color:var(--g)}
 .dbk{font-size:10px;font-weight:600;letter-spacing:1px;color:var(--g);text-transform:uppercase;margin-bottom:2px}
 .dbt{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--t1)}
-.dba{color:var(--t3);font-size:16px}
+.dba{color:var(--t3);font-size:18px}
 
-/* DASHBOARD */
+/* ════════════════════════
+   DASHBOARD
+════════════════════════ */
 #sdash{display:none;flex-direction:column;min-height:100vh;background:var(--bg)}
 #sdash.on{display:flex;animation:fup .4s ease both}
-.dtop{background:var(--s1);border-bottom:.5px solid var(--line);padding:11px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.dtop .logo{margin:0;letter-spacing:4px;text-align:left}
-.dr{display:flex;align-items:center;gap:10px}
-.dco{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--t2)}
+.dtop{background:var(--s1);border-bottom:.5px solid var(--line);padding:11px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:10px}
+.dr{display:flex;align-items:center;gap:8px}
+.dco{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--t2)}
 .codot{width:6px;height:6px;border-radius:50%;background:var(--g)}
-.live{display:flex;align-items:center;gap:5px;background:var(--gdim);border:.5px solid var(--gglow);border-radius:var(--rp);padding:3px 9px;font-size:10px;font-weight:600;color:var(--g);letter-spacing:.5px}
-.ldot{width:5px;height:5px;border-radius:50%;background:var(--g);animation:beat 1.8s ease-in-out infinite}
+.live{display:flex;align-items:center;gap:4px;background:var(--gdim);border:.5px solid var(--gglow);border-radius:var(--rp);padding:3px 8px;font-size:10px;font-weight:600;color:var(--g);letter-spacing:.5px}
+.livdot{width:5px;height:5px;border-radius:50%;background:var(--g);animation:beat 1.8s ease-in-out infinite}
 @keyframes beat{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-.dnav{background:var(--s1);border-bottom:.5px solid var(--line);display:flex;gap:2px;padding:7px 16px;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
+
+/* Dashboard nav - scrollable tabs */
+.dnav{background:var(--s1);border-bottom:.5px solid var(--line);display:flex;gap:2px;padding:7px 14px;overflow-x:auto;flex-shrink:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .dnav::-webkit-scrollbar{display:none}
-.ntab{background:none;border:none;padding:6px 12px;font-size:11px;font-weight:500;color:var(--t3);border-radius:5px;cursor:pointer;white-space:nowrap;font-family:var(--fb);transition:background .15s,color .15s}
+.ntab{background:none;border:none;padding:7px 12px;font-size:12px;font-weight:500;color:var(--t3);border-radius:6px;cursor:pointer;white-space:nowrap;font-family:var(--fb);transition:background .15s,color .15s;-webkit-tap-highlight-color:transparent;flex-shrink:0}
 .ntab:hover{color:var(--t2);background:var(--s2)}.ntab.at{color:var(--t1);background:var(--s2)}
-.dcont{flex:1;overflow-y:auto;padding:16px}
+
+/* Dashboard panels */
+.dpanel{display:none}.dpanel.show{display:block}
+.dcont{flex:1;overflow-y:auto;padding:14px 14px 32px;-webkit-overflow-scrolling:touch}
 .din{max-width:960px;margin:0 auto}
-.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:7px;margin-bottom:14px}
+
+/* KPI */
+.kgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:14px}
+@media(min-width:600px){.kgrid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.kgrid{grid-template-columns:repeat(6,1fr)}}
 .kpi{background:var(--s1);border:.5px solid var(--line);border-radius:var(--r);padding:13px;position:relative;overflow:hidden}
 .kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:var(--kc,var(--g))}
-.klbl{font-size:9px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
-.kval{font-family:var(--fh);font-size:24px;font-weight:800;color:var(--kc,var(--g));line-height:1;margin-bottom:3px;letter-spacing:-.5px}
+.klbl{font-size:9px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;color:var(--t3);margin-bottom:7px;line-height:1.3}
+.kval{font-family:var(--fh);font-size:22px;font-weight:800;color:var(--kc,var(--g));line-height:1;margin-bottom:3px;letter-spacing:-.5px}
 .ksub{font-size:10px;color:var(--t3);line-height:1.3}
-.ktr{display:inline-flex;align-items:center;font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px;margin-top:7px}
+.ktr{display:inline-flex;align-items:center;font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px;margin-top:6px}
 .tup{background:rgba(29,185,84,.12);color:var(--g)}.tdn{background:rgba(239,68,68,.10);color:var(--red)}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px}
-@media(max-width:520px){.g2{grid-template-columns:1fr}}
+
+/* Charts */
+.g2{display:grid;grid-template-columns:1fr;gap:7px;margin-bottom:7px}
+@media(min-width:560px){.g2{grid-template-columns:1fr 1fr}}
 .card{background:var(--s1);border:.5px solid var(--line);border-radius:var(--r);padding:14px}
 .ctit{font-family:var(--fh);font-size:13px;font-weight:700;color:var(--t1);margin-bottom:2px;letter-spacing:-.1px}
 .csub{font-size:10px;color:var(--t3);margin-bottom:12px}
 .br{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.blbl{font-size:10px;color:var(--t2);width:78px;flex-shrink:0;text-align:right}
+.blbl{font-size:10px;color:var(--t2);width:72px;flex-shrink:0;text-align:right}
 .btrk{flex:1;background:var(--s3);border-radius:3px;height:5px;overflow:hidden}
 .bfill{height:5px;border-radius:3px;transition:width 1.3s cubic-bezier(.4,0,.2,1)}
 .bpct{font-size:10px;color:var(--t3);width:26px;text-align:right;flex-shrink:0}
-.dl{display:flex;align-items:center;gap:14px}
+.dl{display:flex;align-items:center;gap:12px}
 .li{display:flex;align-items:center;gap:6px;margin-bottom:9px}
 .ldot2{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .llbl{font-size:11px;color:var(--t2);flex:1}.lval{font-size:11px;font-weight:600;color:var(--t1)}
-.ins{background:var(--s2);border-left:2px solid var(--g);border-radius:0 var(--r2) var(--r2) 0;padding:9px 11px;margin-top:10px}
+.ins{background:var(--s2);border-left:2px solid var(--g);border-radius:0 var(--r2) var(--r2) 0;padding:8px 11px;margin-top:10px}
 .insl{font-size:9px;font-weight:600;letter-spacing:.8px;color:var(--g);text-transform:uppercase;margin-bottom:2px}
 .inst{font-size:11px;color:var(--t2);line-height:1.5;font-weight:300}
 .crow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:.5px solid var(--line)}
 .crow:last-child{border:none}
-.crk{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--t4);width:20px;flex-shrink:0}
+.crk{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--t4);width:18px;flex-shrink:0}
 .cico{width:30px;height:30px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .cnm{font-size:12px;font-weight:600;color:var(--t1)}.ccat{font-size:10px;color:var(--t3)}
-.cpl{font-size:11px;color:var(--t3);flex-shrink:0}
+.cpl{font-size:11px;color:var(--t3);flex-shrink:0;white-space:nowrap}
 .rtbl{width:100%;border-collapse:collapse;font-size:11px}
 .rtbl th{text-align:left;padding:6px 8px;font-size:9px;font-weight:600;letter-spacing:.8px;color:var(--t4);text-transform:uppercase;border-bottom:.5px solid var(--line)}
 .rtbl td{padding:9px 8px;border-bottom:.5px solid var(--line);color:var(--t2)}
 .rtbl tr:last-child td{border:none}
 .rp{display:inline-block;padding:2px 7px;border-radius:var(--rp);font-size:9px;font-weight:700;font-family:var(--fh)}
 .rlo{background:rgba(29,185,84,.12);color:var(--g)}.rmd{background:rgba(245,158,11,.12);color:var(--amber)}.rhi{background:rgba(239,68,68,.10);color:var(--red)}
-.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-@media(max-width:440px){.rgrid{grid-template-columns:repeat(2,1fr)}}
+.rgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+@media(min-width:480px){.rgrid{grid-template-columns:repeat(3,1fr)}}
 .ri{background:var(--s2);border-radius:var(--r2);padding:11px 8px;text-align:center}
 .rv{font-family:var(--fh);font-size:18px;font-weight:800;color:var(--g);margin-bottom:3px;letter-spacing:-.5px}
 .rl{font-size:10px;color:var(--t3);line-height:1.4}
@@ -143,47 +182,74 @@ body{font-family:var(--fb);background:var(--bg);color:var(--t1);-webkit-font-smo
 .dvdr{display:flex;align-items:center;gap:10px;margin:18px 0 12px}
 .dvdr span{font-family:var(--fh);font-size:11px;font-weight:700;color:var(--t1);white-space:nowrap}
 .dvdr::before,.dvdr::after{content:'';flex:1;height:.5px;background:var(--line)}
-.hlbox{border:.5px solid var(--gglow);border-radius:var(--r);padding:16px 18px;background:var(--gdim);margin-top:7px}
-.hlt{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--t1);margin-bottom:4px}
-.hlv{font-family:var(--fh);font-size:26px;font-weight:800;color:var(--g);margin:8px 0 3px;letter-spacing:-1px}
+.hlbox{border:.5px solid var(--gglow);border-radius:var(--r);padding:14px 16px;background:var(--gdim);margin-top:7px}
+.hlt{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--t1);margin-bottom:3px}
+.hlv{font-family:var(--fh);font-size:24px;font-weight:800;color:var(--g);margin:7px 0 3px;letter-spacing:-1px}
 .hld{font-size:12px;color:var(--t2);line-height:1.6;font-weight:300}
 
-/* CTA */
-#scta{background:radial-gradient(ellipse 80% 55% at 50% -5%,rgba(29,185,84,.12) 0%,transparent 60%),var(--bg)}
+/* Alert box */
+.alert-box{background:rgba(239,68,68,.08);border:.5px solid rgba(239,68,68,.25);border-radius:var(--r);padding:12px 14px;margin-bottom:7px}
+.alert-title{font-family:var(--fh);font-size:12px;font-weight:700;color:var(--red);margin-bottom:3px}
+.alert-desc{font-size:11px;color:var(--t2);line-height:1.5}
+
+/* ════════════════════════
+   CTA
+════════════════════════ */
+#scta{background:radial-gradient(ellipse 90% 50% at 50% -5%,rgba(29,185,84,.12) 0%,transparent 60%),var(--bg)}
 .ctw{width:100%;max-width:360px;text-align:center}
-.ctw .logo{margin-bottom:24px}
-.ctw h2{font-family:var(--fh);font-size:clamp(24px,6vw,34px);font-weight:800;line-height:1.1;letter-spacing:-.5px;margin-bottom:10px}
+.ctw h2{font-family:var(--fh);font-size:clamp(24px,7vw,34px);font-weight:800;line-height:1.1;letter-spacing:-.5px;margin-bottom:10px}
 .ctw h2 em{color:var(--g);font-style:normal}
-.ctw .sub{font-size:13px;color:var(--t2);line-height:1.65;font-weight:300;margin-bottom:24px}
+.ctw .sub{font-size:13px;color:var(--t2);line-height:1.65;font-weight:300;margin-bottom:22px}
 .cfields{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
-.cfields input{background:var(--s2);border:.5px solid var(--line2);border-radius:var(--r2);padding:12px 14px;font-size:13px;color:var(--t1);font-family:var(--fb);outline:none;width:100%;transition:border-color .2s}
+.cfields input{background:var(--s2);border:.5px solid var(--line2);border-radius:var(--r2);padding:12px 14px;font-size:14px;color:var(--t1);font-family:var(--fb);outline:none;width:100%;transition:border-color .2s;-webkit-appearance:none}
 .cfields input:focus{border-color:var(--g)}.cfields input::placeholder{color:var(--t4)}
 .cnote{font-size:10px;color:var(--t3)}
+.err-msg{font-size:11px;color:var(--red);margin-bottom:8px;display:none}
 #csuc{display:none;text-align:center}
 .sck{width:52px;height:52px;border-radius:50%;background:var(--gdim);border:1px solid var(--gglow);margin:0 auto 12px;display:flex;align-items:center;justify-content:center}
 .sct{font-family:var(--fh);font-size:20px;font-weight:800;color:var(--g);margin-bottom:7px}
 .scd{font-size:13px;color:var(--t2);line-height:1.6;font-weight:300;margin-bottom:18px}
 .sl{display:inline-block;background:var(--g);color:#000;text-decoration:none;padding:11px 22px;border-radius:var(--r2);font-family:var(--fh);font-size:13px;font-weight:700;transition:background .15s}
 .sl:hover{background:var(--gh)}
-</style>
 
+/* ── BOTTOM CTA DASHBOARD ── */
+.dash-cta-block{background:linear-gradient(135deg,rgba(29,185,84,.07) 0%,rgba(167,139,250,.05) 100%);border:.5px solid var(--line);border-radius:var(--r);padding:20px 16px;text-align:center;margin-top:7px}
+.dash-cta-title{font-family:var(--fh);font-size:15px;font-weight:800;color:var(--t1);margin-bottom:5px}
+.dash-cta-sub{font-size:12px;color:var(--t2);margin-bottom:14px;font-weight:300}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════
+     S1 · REGISTRO
+══════════════════ -->
 <div id="sr" class="scr on">
-  <div class="reg-wrap">
-    <span class="logo">SERO</span>
+  <div class="reg-card">
+    <!-- SERO LOGO SVG -->
+    <svg class="sero-logo" width="80" height="32" viewBox="0 0 80 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="0" y="26" font-family="Bricolage Grotesque, sans-serif" font-size="28" font-weight="800" fill="#1DB954" letter-spacing="6">SERO</text>
+    </svg>
     <h1>Tu bienestar<br><em>empieza aquí</em></h1>
     <p class="sub">Diagnóstico express · NOM-035 oficial · 2 minutos</p>
-    <div class="field"><label>Nombre</label><input id="rn" type="text" placeholder="¿Cómo te llamas?" autocomplete="off"></div>
-    <div class="field"><label>Correo</label><input id="re" type="email" placeholder="correo@empresa.com" autocomplete="off"></div>
+    <div class="field"><label>Nombre</label><input id="rn" type="text" placeholder="¿Cómo te llamas?" autocomplete="given-name" inputmode="text"></div>
+    <div class="field"><label>Correo</label><input id="re" type="email" placeholder="correo@empresa.com" autocomplete="email" inputmode="email"></div>
     <div class="reg-note">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#5c5c58" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#585854" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Tus respuestas son completamente confidenciales
     </div>
-    <button class="btn-p" id="rbtn" onclick="goQ()" disabled>Comenzar diagnóstico <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="btn-p" id="rbtn" onclick="goQ()" disabled>
+      Comenzar diagnóstico
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
   </div>
 </div>
 
+<!-- ══════════════════
+     S2 · PREGUNTAS
+══════════════════ -->
 <div id="sq" class="scr">
-  <div class="qtop"><span class="logo" style="margin:0;text-align:left;letter-spacing:4px">SERO</span>
+  <div class="qtop">
+    <svg width="52" height="18" viewBox="0 0 52 18" fill="none"><text x="0" y="15" font-family="Bricolage Grotesque,sans-serif" font-size="18" font-weight="800" fill="#1DB954" letter-spacing="4">SERO</text></svg>
     <div class="qmeta">
       <div class="qmi">⭐ <b id="xv">0</b> XP</div>
       <div class="qmi">🔥 <b id="sv">0</b></div>
@@ -206,79 +272,155 @@ body{font-family:var(--fb);background:var(--bg);color:var(--t1);-webkit-font-smo
   </div>
 </div>
 
+<!-- ══════════════════
+     S3 · RESULTADO
+══════════════════ -->
 <div id="sres" class="scr">
   <div class="res-wrap" id="rcon"></div>
 </div>
 
+<!-- ══════════════════
+     S4 · DASHBOARD
+══════════════════ -->
 <div id="sdash">
   <div class="dtop">
-    <span class="logo" style="margin:0;text-align:left;letter-spacing:4px">SERO</span>
+    <svg width="52" height="18" viewBox="0 0 52 18" fill="none"><text x="0" y="15" font-family="Bricolage Grotesque,sans-serif" font-size="18" font-weight="800" fill="#1DB954" letter-spacing="4">SERO</text></svg>
     <div class="dr">
       <div class="dco"><div class="codot"></div><span id="dco">Empresa Demo</span></div>
-      <div class="live"><div class="ldot"></div>En vivo</div>
+      <div class="live"><div class="livdot"></div>En vivo</div>
     </div>
   </div>
-  <div class="dnav">
-    <button class="ntab at">Resumen</button>
-    <button class="ntab">Por área</button>
-    <button class="ntab">Contenido</button>
-    <button class="ntab">Burnout</button>
-    <button class="ntab">ROI</button>
+  <div class="dnav" id="dash-nav">
+    <button class="ntab at" onclick="showPanel(0,this)">Resumen</button>
+    <button class="ntab" onclick="showPanel(1,this)">Por área</button>
+    <button class="ntab" onclick="showPanel(2,this)">Contenido</button>
+    <button class="ntab" onclick="showPanel(3,this)">Burnout</button>
+    <button class="ntab" onclick="showPanel(4,this)">ROI</button>
   </div>
-  <div class="dcont"><div class="din" id="din"></div></div>
+  <div class="dcont">
+    <div class="din">
+
+      <!-- PANEL 0: RESUMEN -->
+      <div class="dpanel show" id="p0">
+        <div class="kgrid" id="kgrid"></div>
+        <div class="alert-box">
+          <div class="alert-title">⚠ Área de atención prioritaria</div>
+          <div class="alert-desc">Operaciones presenta riesgo alto (78%) y burnout crítico (72/100). Se recomienda intervención inmediata con sesiones grupales de manejo de estrés.</div>
+        </div>
+        <div class="g2" id="resumen-charts"></div>
+      </div>
+
+      <!-- PANEL 1: POR ÁREA -->
+      <div class="dpanel" id="p1">
+        <div class="g2" id="area-charts"></div>
+      </div>
+
+      <!-- PANEL 2: CONTENIDO -->
+      <div class="dpanel" id="p2">
+        <div class="card" id="content-card"></div>
+      </div>
+
+      <!-- PANEL 3: BURNOUT -->
+      <div class="dpanel" id="p3">
+        <div class="g2" id="burnout-charts"></div>
+      </div>
+
+      <!-- PANEL 4: ROI -->
+      <div class="dpanel" id="p4">
+        <div id="roi-content"></div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
+<!-- ══════════════════
+     S5 · CTA
+══════════════════ -->
 <div id="scta" class="scr">
   <div class="ctw">
-    <span class="logo">SERO</span>
+    <svg class="sero-logo" width="80" height="32" viewBox="0 0 80 32" fill="none"><text x="0" y="26" font-family="Bricolage Grotesque,sans-serif" font-size="28" font-weight="800" fill="#1DB954" letter-spacing="6">SERO</text></svg>
     <h2>Lleva esto a<br>tu <em>empresa</em></h2>
     <p class="sub">Un especialista SERO te contacta en menos de 24 horas con una propuesta para tu equipo.</p>
     <div id="cform">
       <div class="cfields">
-        <input id="cn" type="text" placeholder="Tu nombre">
-        <input id="cc" type="text" placeholder="Nombre de tu empresa">
-        <input id="cm" type="email" placeholder="Correo empresarial">
+        <input id="cn" type="text" placeholder="Tu nombre" autocomplete="given-name">
+        <input id="cco" type="text" placeholder="Nombre de tu empresa" autocomplete="organization">
+        <input id="cm" type="email" placeholder="Correo empresarial" autocomplete="email" inputmode="email">
+        <input id="ctel" type="tel" placeholder="Teléfono (opcional)" autocomplete="tel" inputmode="tel">
       </div>
-      <button class="btn-p" onclick="subCTA()" style="margin-bottom:10px">Quiero saber más →</button>
+      <div class="err-msg" id="errmsg">Por favor llena nombre, empresa y correo.</div>
+      <button class="btn-p" id="cta-btn" onclick="subCTA()" style="margin-bottom:10px">Quiero saber más →</button>
       <p class="cnote">Sin spam · Respuesta en menos de 24 hrs</p>
     </div>
     <div id="csuc">
       <div class="sck"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#1DB954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="sct">¡Perfecto!</div>
-      <p class="scd">Nos pondremos en contacto muy pronto. Mientras tanto, descarga SERO y explora las prácticas.</p>
+      <p class="scd">Nos pondremos en contacto muy pronto. Mientras tanto, descarga SERO y explora las prácticas de bienestar.</p>
       <a class="sl" href="https://soysero.com" target="_blank">Visitar soysero.com →</a>
     </div>
   </div>
 </div>
 
 <script>
-const Qs=[
+// ── EMAILJS INIT ──────────────────────────────────────────────
+// Replace these with your actual EmailJS credentials
+// Sign up free at emailjs.com → get Service ID, Template ID, Public Key
+const EMAILJS_SERVICE  = 'YOUR_SERVICE_ID';
+const EMAILJS_TEMPLATE = 'YOUR_TEMPLATE_ID';
+const EMAILJS_KEY      = 'YOUR_PUBLIC_KEY';
+emailjs.init(EMAILJS_KEY);
+
+// ── DATA ──────────────────────────────────────────────────────
+const Qs = [
   {c:"NOM-035",t:"¿Terminas tus tareas dentro de tu horario de trabajo?",h:"¿Necesitas quedarte extra o llevar trabajo a casa con frecuencia?",o:[[4,"Siempre"],[3,"Casi siempre"],[2,"A veces"],[1,"Nunca"]]},
-  {c:"NOM-035",t:"¿Tu jefe te da retroalimentación útil y te apoya cuando la necesitas?",h:"Comentarios que realmente te ayudan a crecer.",o:[[4,"Siempre"],[3,"Casi siempre"],[2,"A veces"],[1,"Nunca"]]},
+  {c:"NOM-035",t:"¿Tu jefe te da retroalimentación útil y te apoya cuando lo necesitas?",h:"Comentarios que realmente te ayudan a mejorar y crecer.",o:[[4,"Siempre"],[3,"Casi siempre"],[2,"A veces"],[1,"Nunca"]]},
   {c:"NOM-035",t:"¿Existe un ambiente de respeto y colaboración en tu empresa?",h:"Entre compañeros y hacia diferentes niveles jerárquicos.",o:[[4,"Siempre"],[3,"Casi siempre"],[2,"A veces"],[1,"Nunca"]]},
   {c:"Bienestar",t:"¿Con qué frecuencia el trabajo te genera ansiedad o agotamiento?",h:"Nerviosismo, tensión o cansancio que no desaparece con el descanso.",o:[[1,"Siempre"],[2,"Seguido"],[3,"A veces"],[4,"Casi nunca"]]},
-  {c:"Bienestar",t:"En general, ¿tu trabajo te genera satisfacción y propósito?",h:"¿Sientes que lo que haces vale la pena y aporta algo?",o:[[4,"Siempre"],[3,"Casi siempre"],[2,"A veces"],[1,"Nunca"]]}
+  {c:"Bienestar",t:"En general, ¿tu trabajo te genera satisfacción y propósito?",h:"¿Sientes que lo que haces vale la pena y aporta algo real?",o:[[4,"Siempre"],[3,"Casi siempre"],[2,"A veces"],[1,"Nunca"]]}
 ];
-const P={
-  bajo:[{n:"Respiración 4-7-8",c:"Manejo del estrés",col:"#1DB954",t:"5 min"},{n:"Diario de gratitud",c:"Bienestar emocional",col:"#a78bfa",t:"7 min"},{n:"Foco profundo",c:"Productividad",col:"#60a5fa",t:"10 min"}],
-  medio:[{n:"Descompresión exprés",c:"Reducción de estrés",col:"#f59e0b",t:"8 min"},{n:"Límites saludables",c:"Relaciones laborales",col:"#a78bfa",t:"10 min"},{n:"Descanso activo",c:"Recuperación",col:"#1DB954",t:"6 min"}],
-  alto:[{n:"Protocolo de calma",c:"Manejo de crisis",col:"#ef4444",t:"5 min"},{n:"Reset mental",c:"Reducción de estrés",col:"#f59e0b",t:"10 min"},{n:"Apoyo emocional guiado",c:"Resiliencia",col:"#a78bfa",t:"8 min"}]
+
+const Pracs = {
+  bajo:[
+    {n:"Reset del sistema nervioso",c:"Manejo del estrés · 7 min",col:"#1DB954",tag:"Recomendada",url:"https://insig.ht/OnkvLfN7u2b"},
+    {n:"Sueño profundo y reparador",c:"Descanso · Dormir en calma",col:"#a78bfa",tag:"Para esta noche",url:"https://insig.ht/rfp9dyT7u2b"},
+    {n:"¿Qué es el estrés?",c:"Educación · Comprende tu cuerpo",col:"#60a5fa",tag:"Aprende",url:"https://drive.google.com/file/d/10tFcJhe3argptxp32y8SNUXIWyaDNuGs/view?usp=sharing"}
+  ],
+  medio:[
+    {n:"Reset del sistema nervioso",c:"Manejo del estrés · 7 min",col:"#f59e0b",tag:"Prioritaria",url:"https://insig.ht/OnkvLfN7u2b"},
+    {n:"¿Qué es el estrés?",c:"Educación · Comprende tu cuerpo",col:"#60a5fa",tag:"Empieza aquí",url:"https://drive.google.com/file/d/10tFcJhe3argptxp32y8SNUXIWyaDNuGs/view?usp=sharing"},
+    {n:"Sueño profundo y reparador",c:"Descanso · Dormir en calma",col:"#a78bfa",tag:"Esta noche",url:"https://insig.ht/rfp9dyT7u2b"}
+  ],
+  alto:[
+    {n:"Reset del sistema nervioso",c:"Manejo del estrés · 7 min",col:"#ef4444",tag:"Urgente",url:"https://insig.ht/OnkvLfN7u2b"},
+    {n:"¿Qué es el estrés?",c:"Educación · Comprende tu cuerpo",col:"#f59e0b",tag:"Empieza aquí",url:"https://drive.google.com/file/d/10tFcJhe3argptxp32y8SNUXIWyaDNuGs/view?usp=sharing"},
+    {n:"Sueño profundo y reparador",c:"Descanso · Dormir en calma",col:"#a78bfa",tag:"Esta noche",url:"https://insig.ht/rfp9dyT7u2b"}
+  ]
 };
-let uN='',uE='',cur=0,scores=[],sel=null,xp=0,str=0,mstr=0;
+
+// ── STATE ─────────────────────────────────────────────────────
+let uN='',uE='',uTel='',cur=0,scores=[],sel=null,xp=0,str=0,mstr=0;
+
+// ── REGISTER ──────────────────────────────────────────────────
 const rn=document.getElementById('rn'),re=document.getElementById('re'),rb=document.getElementById('rbtn');
 function ck(){rb.disabled=!(rn.value.trim().length>1&&re.value.includes('@'));}
 rn.addEventListener('input',ck);re.addEventListener('input',ck);
 rn.addEventListener('keydown',e=>{if(e.key==='Enter')re.focus();});
 re.addEventListener('keydown',e=>{if(e.key==='Enter'&&!rb.disabled)goQ();});
+
+// ── SCREENS ───────────────────────────────────────────────────
 function show(id){
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
   const el=document.getElementById(id);
   if(el){el.classList.add('on');window.scrollTo(0,0);}
 }
+
+// ── QUESTIONS ─────────────────────────────────────────────────
 function goQ(){
   uN=rn.value.trim().split(' ')[0];uE=re.value.trim();
   show('sq');document.getElementById('qftr').style.display='flex';loadQ(0);
 }
+
 function loadQ(i){
   sel=null;document.getElementById('nxt').classList.remove('on');
   const q=Qs[i];
@@ -298,33 +440,57 @@ function loadQ(i){
     grid.appendChild(b);
   });
 }
-function addXP(pts){xp+=pts;document.getElementById('xv').textContent=xp;const p=document.getElementById('xpp');p.textContent='+'+pts+' XP';p.classList.add('show');setTimeout(()=>p.classList.remove('show'),900);}
-function fly(cb){const c=document.getElementById('qc');c.className='qcard fl';setTimeout(cb,285);}
+
+function addXP(pts){
+  xp+=pts;document.getElementById('xv').textContent=xp;
+  const p=document.getElementById('xpp');p.textContent='+'+pts+' XP';p.classList.add('show');
+  setTimeout(()=>p.classList.remove('show'),900);
+}
+
+function fly(cb){const c=document.getElementById('qc');c.className='qcard fl';setTimeout(cb,280);}
+
 function adv(){
   if(sel===null)return;scores.push(sel);
   addXP(sel===4?10:sel===3?8:sel===2?5:3);
   str=Math.min(str+1,5);if(str>mstr)mstr=str;document.getElementById('sv').textContent=str;
   fly(()=>{if(cur<Qs.length-1){cur++;loadQ(cur);}else doResult();});
 }
-function skipQ(){scores.push(2);str=0;document.getElementById('sv').textContent=0;fly(()=>{if(cur<Qs.length-1){cur++;loadQ(cur);}else doResult();});}
+
+function skipQ(){
+  scores.push(2);str=0;document.getElementById('sv').textContent=0;
+  fly(()=>{if(cur<Qs.length-1){cur++;loadQ(cur);}else doResult();});
+}
+
+// ── RESULT ────────────────────────────────────────────────────
 function doResult(){
   document.getElementById('pf').style.width='100%';
   const tot=scores.reduce((a,b)=>a+b,0),max=Qs.length*4,pct=tot/max;
   let lvl,col,bg,desc,pk;
   if(pct>=.75){lvl='Riesgo bajo';col='#1DB954';bg='rgba(29,185,84,.11)';desc='Tu entorno laboral tiene condiciones saludables. Estas prácticas potenciarán aún más tu bienestar.';pk='bajo';}
-  else if(pct>=.45){lvl='Riesgo medio';col='#f59e0b';bg='rgba(245,158,11,.10)';desc='Hay factores importantes que vale atender. Estas prácticas de SERO están hechas para tu situación.';pk='medio';}
+  else if(pct>=.45){lvl='Riesgo medio';col='#f59e0b';bg='rgba(245,158,11,.10)';desc='Hay factores importantes que vale la pena atender. Estas prácticas están hechas para tu situación.';pk='medio';}
   else{lvl='Riesgo alto';col='#ef4444';bg='rgba(239,68,68,.09)';desc='Tu diagnóstico muestra señales importantes. Empieza estas prácticas hoy y habla con tu área de RH.';pk='alto';}
-  const ps=P[pk];
+  const ps=Pracs[pk];
   document.getElementById('rcon').innerHTML=`
     <div class="res-top">
-      <div class="res-ring" style="background:${bg}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="${col}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="res-ring" style="background:${bg}">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="${col}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
       <div class="res-greet">Resultado de ${uN}</div>
       <div class="res-lvl" style="color:${col}">${lvl}</div>
       <div class="res-xp">⭐ ${xp} XP · Racha: ${mstr}</div>
       <div class="res-desc">${desc}</div>
     </div>
-    <div class="slbl" style="margin-bottom:9px">Prácticas recomendadas</div>
-    ${ps.map(p=>`<div class="pcard"><div class="pdot" style="background:${p.col}"></div><div style="flex:1"><div class="pname">${p.n}</div><div class="psub">${p.c}</div></div><div class="ptag">${p.t}</div></div>`).join('')}
+    <div class="slbl" style="margin-bottom:9px">Prácticas recomendadas para ti</div>
+    ${ps.map(p=>`
+    <a class="pcard" href="${p.url}" target="_blank" rel="noopener">
+      <div class="pdot" style="background:${p.col}"></div>
+      <div style="flex:1">
+        <div class="pname">${p.n}</div>
+        <div class="psub">${p.c}</div>
+      </div>
+      <div class="ptag">${p.tag}</div>
+      <div class="plink-arrow">↗</div>
+    </a>`).join('')}
     <div class="nom-box">
       <div class="nom-t">Resultado oficial NOM-035-STPS-2018</div>
       <div class="nom-v">Puntuación: ${tot} / ${max} · ${lvl}</div>
@@ -336,109 +502,208 @@ function doResult(){
     </button>`;
   show('sres');
 }
+
+// ── DASHBOARD ─────────────────────────────────────────────────
+function showPanel(idx,btn){
+  document.querySelectorAll('.dpanel').forEach((p,i)=>p.classList.toggle('show',i===idx));
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('at'));
+  btn.classList.add('at');
+  // Animate bars in newly shown panel
+  setTimeout(animateBars,50);
+}
+
+function animateBars(){
+  document.querySelectorAll('.bfill,.bbar').forEach(b=>{
+    const w=b.getAttribute('data-w');
+    if(w&&b.style.width==='0%'||b.style.width===''){
+      b.style.transition='width 1.3s cubic-bezier(.4,0,.2,1)';
+      b.style.width=w+'%';
+    }
+  });
+}
+
 function oDash(){
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
-  const d=document.getElementById('sdash');d.style.display='flex';d.classList.add('on');window.scrollTo(0,0);buildDash();
+  const d=document.getElementById('sdash');d.style.display='flex';d.classList.add('on');
+  window.scrollTo(0,0);buildDash();
 }
+
 function buildDash(){
-  document.getElementById('din').innerHTML=`
-  <div class="kgrid">
-    ${[['Empleados activos','187','de 248 · 75% participación','↑ +12% vs anterior','tup','#1DB954'],
-       ['Índice de riesgo','42%','promedio empresa','↓ −8 pts este mes','tup','#f59e0b'],
-       ['Sesiones SERO','1,284','reproducciones este mes','↑ +34%','tup','#60a5fa'],
-       ['Burnout score','38','escala 0–100 · óptimo <50','↓ mejoró 11 pts','tup','#a78bfa'],
-       ['Ahorro mensual','$45K','reducción en ausentismo','↑ ROI 4.2×','tup','#1DB954'],
-       ['NOM-035','93%','cumplimiento normativo','18 pendientes','tdn','#ef4444'],
-    ].map(([l,v,s,t,tc,c])=>`<div class="kpi" style="--kc:${c}"><div class="klbl">${l}</div><div class="kval">${v}</div><div class="ksub">${s}</div><div class="ktr ${tc}">${t}</div></div>`).join('')}
-  </div>
-  <div class="g2">
+  // KPIs
+  document.getElementById('kgrid').innerHTML=[
+    ['Empleados activos','187','de 248 · 75% participación','↑ +12% vs anterior','tup','#1DB954'],
+    ['Índice de riesgo','42%','promedio empresa · meta <30%','↓ −8 pts este mes','tup','#f59e0b'],
+    ['Burnout score','38','escala 0–100 · óptimo <40','↓ mejoró 11 pts','tup','#a78bfa'],
+    ['Sesiones SERO','1,284','reproducciones este mes','↑ +34%','tup','#60a5fa'],
+    ['Ahorro mensual','$45K','reducción en ausentismo','↑ ROI 4.2×','tup','#1DB954'],
+    ['NOM-035','93%','cumplimiento normativo','18 pendientes','tdn','#ef4444'],
+  ].map(([l,v,s,t,tc,c])=>`<div class="kpi" style="--kc:${c}"><div class="klbl">${l}</div><div class="kval">${v}</div><div class="ksub">${s}</div><div class="ktr ${tc}">${t}</div></div>`).join('');
+
+  // Panel 0 charts
+  document.getElementById('resumen-charts').innerHTML=`
     <div class="card">
       <div class="ctit">Riesgo por departamento</div><div class="csub">Índice promedio NOM-035</div>
-      ${[['Operaciones','#ef4444',78],['Ventas','#f59e0b',61],['Marketing','#f59e0b',54],['Tecnología','#1DB954',38],['RH','#1DB954',29],['Finanzas','#1DB954',24]]
-        .map(([d,c,v])=>`<div class="br"><div class="blbl">${d}</div><div class="btrk"><div class="bfill" style="width:0%;background:${c}" data-w="${v}"></div></div><div class="bpct">${v}%</div></div>`).join('')}
+      ${bars([['Operaciones','#ef4444',78],['Ventas','#f59e0b',61],['Marketing','#f59e0b',54],['Tecnología','#1DB954',38],['RH','#1DB954',29],['Finanzas','#1DB954',24]])}
     </div>
     <div class="card">
       <div class="ctit">Distribución de riesgo</div><div class="csub">248 colaboradores</div>
       <div class="dl">
-        <svg width="88" height="88" viewBox="0 0 88 88" style="flex-shrink:0">
-          <circle cx="44" cy="44" r="34" fill="none" stroke="#1c1c1c" stroke-width="13"/>
-          <circle cx="44" cy="44" r="34" fill="none" stroke="#1DB954" stroke-width="13" stroke-dasharray="84 214" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 44 44)"/>
-          <circle cx="44" cy="44" r="34" fill="none" stroke="#f59e0b" stroke-width="13" stroke-dasharray="48 214" stroke-dashoffset="-84" stroke-linecap="round" transform="rotate(-90 44 44)"/>
-          <circle cx="44" cy="44" r="34" fill="none" stroke="#ef4444" stroke-width="13" stroke-dasharray="19 214" stroke-dashoffset="-132" stroke-linecap="round" transform="rotate(-90 44 44)"/>
-          <text x="44" y="40" text-anchor="middle" font-family="Bricolage Grotesque,sans-serif" font-size="14" font-weight="800" fill="#f2f2f0">248</text>
-          <text x="44" y="53" text-anchor="middle" font-size="8" fill="#5c5c58" font-family="Inter,sans-serif">personas</text>
-        </svg>
+        ${donut()}
         <div style="flex:1">
           <div class="li"><div class="ldot2" style="background:#1DB954"></div><span class="llbl">Riesgo bajo</span><span class="lval">66%</span></div>
           <div class="li"><div class="ldot2" style="background:#f59e0b"></div><span class="llbl">Riesgo medio</span><span class="lval">21%</span></div>
           <div class="li"><div class="ldot2" style="background:#ef4444"></div><span class="llbl">Riesgo alto</span><span class="lval">13%</span></div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="g2">
+    </div>`;
+
+  // Panel 1: Por área
+  document.getElementById('area-charts').innerHTML=`
     <div class="card">
       <div class="ctit">Riesgo por género</div><div class="csub">Segmentación NOM-035</div>
-      ${[['Mujeres','#a78bfa',58],['Hombres','#60a5fa',47],['No binario','#1DB954',41]]
-        .map(([d,c,v])=>`<div class="br"><div class="blbl">${d}</div><div class="btrk"><div class="bfill" style="width:0%;background:${c}" data-w="${v}"></div></div><div class="bpct">${v}%</div></div>`).join('')}
+      ${bars([['Mujeres','#a78bfa',58],['Hombres','#60a5fa',47],['No binario','#1DB954',41]])}
       <div class="ins"><div class="insl">Insight</div><div class="inst">Las mujeres en Operaciones presentan el índice más alto. Recomendamos priorizar sesiones de límites saludables.</div></div>
     </div>
     <div class="card">
       <div class="ctit">Riesgo por edad</div><div class="csub">Segmento generacional</div>
-      ${[['18–25','#1DB954',34],['26–35','#f59e0b',52],['36–45','#f59e0b',61],['46–55','#ef4444',74],['55+','#ef4444',69]]
-        .map(([d,c,v])=>`<div class="br"><div class="blbl">${d}</div><div class="btrk"><div class="bfill" style="width:0%;background:${c}" data-w="${v}"></div></div><div class="bpct">${v}%</div></div>`).join('')}
+      ${bars([['18–25','#1DB954',34],['26–35','#f59e0b',52],['36–45','#f59e0b',61],['46–55','#ef4444',74],['55+','#ef4444',69]])}
     </div>
-  </div>
-  <div class="dvdr"><span>Contenido más escuchado · Este mes</span></div>
-  <div class="card" style="margin-bottom:7px">
-    ${[['Respiración 4-7-8','Manejo del estrés','#1DB954',2847],['Desconexión digital','Equilibrio vida-trabajo','#a78bfa',2103],['Límites saludables','Relaciones laborales','#f59e0b',1892],['Foco profundo','Productividad','#60a5fa',1654],['Reset mental','Reducción de estrés','#ef4444',1421]]
-      .map(([n,c,col,p],i)=>`<div class="crow"><div class="crk">${i+1}</div><div class="cico" style="background:${col}18"><svg width="12" height="12" viewBox="0 0 24 24" fill="${col}"><path d="M8 5v14l11-7z"/></svg></div><div style="flex:1;min-width:0"><div class="cnm">${n}</div><div class="ccat">${c}</div></div><div class="cpl">${p.toLocaleString('es-MX')} plays</div></div>`).join('')}
-  </div>
-  <div class="g2">
+    <div class="card" style="grid-column:1/-1">
+      <div class="ctit">NOM-035 por área</div><div class="csub">% completado · Nivel de riesgo</div>
+      <table class="rtbl"><thead><tr><th>Área</th><th>Completado</th><th>Riesgo</th><th>Acción</th></tr></thead><tbody>
+        <tr><td>Operaciones</td><td>84%</td><td><span class="rp rhi">Alto</span></td><td style="color:var(--red);font-size:10px">Intervención urgente</td></tr>
+        <tr><td>Ventas</td><td>91%</td><td><span class="rp rmd">Medio</span></td><td style="color:var(--amber);font-size:10px">Monitoreo activo</td></tr>
+        <tr><td>Marketing</td><td>95%</td><td><span class="rp rmd">Medio</span></td><td style="color:var(--amber);font-size:10px">Monitoreo activo</td></tr>
+        <tr><td>Tecnología</td><td>100%</td><td><span class="rp rlo">Bajo</span></td><td style="color:var(--g);font-size:10px">Mantener</td></tr>
+        <tr><td>RH</td><td>100%</td><td><span class="rp rlo">Bajo</span></td><td style="color:var(--g);font-size:10px">Mantener</td></tr>
+        <tr><td>Finanzas</td><td>97%</td><td><span class="rp rlo">Bajo</span></td><td style="color:var(--g);font-size:10px">Mantener</td></tr>
+      </tbody></table>
+    </div>`;
+
+  // Panel 2: Contenido
+  document.getElementById('content-card').innerHTML=`
+    <div class="ctit" style="margin-bottom:14px">Prácticas más escuchadas · Este mes</div>
+    ${[
+      ['Reset del sistema nervioso','Manejo del estrés','#1DB954',2847],
+      ['Sueño profundo y reparador','Descanso','#a78bfa',2103],
+      ['Límites saludables','Relaciones laborales','#f59e0b',1892],
+      ['Foco profundo','Productividad','#60a5fa',1654],
+      ['¿Qué es el estrés?','Educación','#ef4444',1421],
+    ].map(([n,c,col,p],i)=>`
+    <div class="crow">
+      <div class="crk">${i+1}</div>
+      <div class="cico" style="background:${col}18"><svg width="12" height="12" viewBox="0 0 24 24" fill="${col}"><path d="M8 5v14l11-7z"/></svg></div>
+      <div style="flex:1;min-width:0"><div class="cnm">${n}</div><div class="ccat">${c}</div></div>
+      <div class="cpl">${p.toLocaleString('es-MX')} plays</div>
+    </div>`).join('')}`;
+
+  // Panel 3: Burnout
+  document.getElementById('burnout-charts').innerHTML=`
     <div class="card">
-      <div class="ctit">Índice de burnout</div><div class="csub">0 = óptimo · 100 = crítico</div>
+      <div class="ctit">Índice de burnout por área</div><div class="csub">0 = óptimo · 100 = crítico</div>
       ${[['Operaciones',72,'#ef4444'],['Ventas',58,'#f59e0b'],['Marketing',51,'#f59e0b'],['Tecnología',34,'#1DB954'],['RH',28,'#1DB954'],['Finanzas',22,'#1DB954']]
         .map(([d,v,c])=>`<div class="burn-r"><div class="bdpt">${d}</div><div class="btrk2"><div class="bbar" style="width:0%;background:${c}" data-w="${v}"></div></div><div class="bvl">${v}</div></div>`).join('')}
+      <div class="ins" style="margin-top:12px"><div class="insl">Alerta crítica</div><div class="inst">Operaciones supera el umbral de riesgo alto (70+). Sin intervención, se proyecta un aumento del 15% en rotación en los próximos 3 meses.</div></div>
     </div>
     <div class="card">
-      <div class="ctit">NOM-035 por área</div><div class="csub">% completado · Nivel de riesgo</div>
-      <table class="rtbl"><thead><tr><th>Área</th><th>%</th><th>Riesgo</th></tr></thead><tbody>
-        <tr><td>Operaciones</td><td>84%</td><td><span class="rp rhi">Alto</span></td></tr>
-        <tr><td>Ventas</td><td>91%</td><td><span class="rp rmd">Medio</span></td></tr>
-        <tr><td>Marketing</td><td>95%</td><td><span class="rp rmd">Medio</span></td></tr>
-        <tr><td>Tecnología</td><td>100%</td><td><span class="rp rlo">Bajo</span></td></tr>
-        <tr><td>RH</td><td>100%</td><td><span class="rp rlo">Bajo</span></td></tr>
-        <tr><td>Finanzas</td><td>97%</td><td><span class="rp rlo">Bajo</span></td></tr>
-      </tbody></table>
+      <div class="ctit">Síntomas más reportados</div><div class="csub">Top factores de riesgo</div>
+      ${bars([['Carga excesiva','#ef4444',74],['Falta de control','#f59e0b',61],['Mal liderazgo','#f59e0b',48],['Conflictos','#60a5fa',38],['Desequilibrio','#a78bfa',35]])}
+    </div>`;
+
+  // Panel 4: ROI
+  document.getElementById('roi-content').innerHTML=`
+    <div class="card" style="margin-bottom:7px">
+      <div class="ctit">ROI estimado con SERO</div><div class="csub">Basado en 248 colaboradores · Metodología IMSS / SHRM</div>
+      <div class="rgrid" style="margin:12px 0">
+        ${[['$284K','Ahorro anual en ausentismo'],['$156K','Reducción en rotación'],['$98K','Productividad recuperada'],['4.2×','ROI vs inversión SERO'],['−31%','Días perdidos'],['+ 18%','eNPS empleados']]
+          .map(([v,l])=>`<div class="ri"><div class="rv">${v}</div><div class="rl">${l}</div></div>`).join('')}
+      </div>
+      <div class="hlbox">
+        <div class="hlt">Proyección 12 meses con SERO</div>
+        <div class="hlv">$538,000 MXN</div>
+        <div class="hld">Ahorro total estimado en ausentismo, rotación y baja productividad con implementación completa de la plataforma SERO.</div>
+      </div>
     </div>
-  </div>
-  <div class="dvdr"><span>Impacto financiero</span></div>
-  <div class="card" style="margin-bottom:7px">
-    <div class="ctit">ROI estimado con SERO</div><div class="csub">Basado en 248 colaboradores · Metodología IMSS / SHRM</div>
-    <div class="rgrid" style="margin:12px 0">
-      ${[['$284K','Ahorro anual en ausentismo'],['$156K','Reducción en rotación'],['$98K','Productividad recuperada'],['4.2×','ROI vs inversión SERO'],['−31%','Días perdidos'],['+ 18%','eNPS colaboradores']]
-        .map(([v,l])=>`<div class="ri"><div class="rv">${v}</div><div class="rl">${l}</div></div>`).join('')}
-    </div>
-    <div class="hlbox"><div class="hlt">Proyección 12 meses con SERO</div><div class="hlv">$538,000 MXN</div><div class="hld">Ahorro total estimado en ausentismo, rotación y baja productividad con implementación completa.</div></div>
-  </div>
-  <div class="card" style="text-align:center;padding:22px 18px;background:linear-gradient(135deg,rgba(29,185,84,.07) 0%,rgba(167,139,250,.05) 100%);margin-top:7px">
-    <div style="font-family:var(--fh);font-size:15px;font-weight:800;color:var(--t1);margin-bottom:5px">¿Quieres este dashboard para tu empresa?</div>
-    <div style="font-size:12px;color:var(--t2);margin-bottom:16px;font-weight:300">Implementación en 72 horas · Cumplimiento NOM-035 garantizado</div>
-    <button class="btn-p" style="max-width:240px;margin:0 auto" onclick="goCTA()">Agendar demo →</button>
-  </div>`;
-  setTimeout(()=>{
-    document.querySelectorAll('.bfill,.bbar').forEach(b=>{const w=b.getAttribute('data-w');if(w){b.style.transition='width 1.3s cubic-bezier(.4,0,.2,1)';b.style.width=w+'%';}});
-  },150);
+    <div class="dash-cta-block">
+      <div class="dash-cta-title">¿Quieres este dashboard para tu empresa?</div>
+      <div class="dash-cta-sub">Implementación en 72 horas · Cumplimiento NOM-035 garantizado</div>
+      <button class="btn-p" style="max-width:260px;margin:0 auto" onclick="goCTA()">Agendar demo →</button>
+    </div>`;
+
+  setTimeout(animateBars,150);
 }
+
+// ── HELPERS ───────────────────────────────────────────────────
+function bars(data){
+  return data.map(([d,c,v])=>`
+    <div class="br">
+      <div class="blbl">${d}</div>
+      <div class="btrk"><div class="bfill" style="width:0%;background:${c}" data-w="${v}"></div></div>
+      <div class="bpct">${v}%</div>
+    </div>`).join('');
+}
+
+function donut(){
+  return `<svg width="88" height="88" viewBox="0 0 88 88" style="flex-shrink:0">
+    <circle cx="44" cy="44" r="34" fill="none" stroke="#1c1c1c" stroke-width="13"/>
+    <circle cx="44" cy="44" r="34" fill="none" stroke="#1DB954" stroke-width="13" stroke-dasharray="84 214" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 44 44)"/>
+    <circle cx="44" cy="44" r="34" fill="none" stroke="#f59e0b" stroke-width="13" stroke-dasharray="48 214" stroke-dashoffset="-84" stroke-linecap="round" transform="rotate(-90 44 44)"/>
+    <circle cx="44" cy="44" r="34" fill="none" stroke="#ef4444" stroke-width="13" stroke-dasharray="19 214" stroke-dashoffset="-132" stroke-linecap="round" transform="rotate(-90 44 44)"/>
+    <text x="44" y="40" text-anchor="middle" font-family="Bricolage Grotesque,sans-serif" font-size="14" font-weight="800" fill="#f0f0ee">248</text>
+    <text x="44" y="53" text-anchor="middle" font-size="8" fill="#585854" font-family="Inter,sans-serif">personas</text>
+  </svg>`;
+}
+
+// ── CTA ───────────────────────────────────────────────────────
 function goCTA(){
-  document.getElementById('sdash').style.display='none';document.getElementById('sdash').classList.remove('on');
+  document.getElementById('sdash').style.display='none';
+  document.getElementById('sdash').classList.remove('on');
   const cn=document.getElementById('cn'),cm=document.getElementById('cm');
   if(uN&&!cn.value)cn.value=uN;if(uE&&!cm.value)cm.value=uE;
   show('scta');
 }
-function subCTA(){
-  const n=document.getElementById('cn').value.trim(),e=document.getElementById('cm').value.trim(),c=document.getElementById('cc').value.trim();
-  if(!n||!e.includes('@')||!c)return;
-  document.getElementById('cform').style.display='none';document.getElementById('csuc').style.display='block';
+
+async function subCTA(){
+  const n=document.getElementById('cn').value.trim();
+  const e=document.getElementById('cm').value.trim();
+  const c=document.getElementById('cco').value.trim();
+  const tel=document.getElementById('ctel').value.trim();
+  const err=document.getElementById('errmsg');
+  const btn=document.getElementById('cta-btn');
+
+  if(!n||!e.includes('@')||!c){err.style.display='block';return;}
+  err.style.display='none';
+  btn.disabled=true;btn.textContent='Enviando...';
+
+  const params={
+    from_name:n,
+    company:c,
+    email:e,
+    phone:tel||'No proporcionado',
+    to_email:'dan@soysero.com',
+    reply_to:e
+  };
+
+  try{
+    // Try EmailJS — if not configured, fallback to mailto
+    if(EMAILJS_SERVICE!=='YOUR_SERVICE_ID'){
+      await emailjs.send(EMAILJS_SERVICE,EMAILJS_TEMPLATE,params);
+    } else {
+      // Fallback: open mailto
+      const body=`Nombre: ${n}\nEmpresa: ${c}\nCorreo: ${e}\nTeléfono: ${tel||'No proporcionado'}`;
+      window.open(`mailto:dan@soysero.com?subject=Demo SERO - ${c}&body=${encodeURIComponent(body)}`);
+    }
+    document.getElementById('cform').style.display='none';
+    document.getElementById('csuc').style.display='block';
+  } catch(err2){
+    btn.disabled=false;btn.textContent='Quiero saber más →';
+    // Fallback mailto on error
+    const body=`Nombre: ${n}\nEmpresa: ${c}\nCorreo: ${e}\nTeléfono: ${tel||'No proporcionado'}`;
+    window.open(`mailto:dan@soysero.com?subject=Demo SERO - ${c}&body=${encodeURIComponent(body)}`);
+    document.getElementById('cform').style.display='none';
+    document.getElementById('csuc').style.display='block';
+  }
 }
 </script>
+</body>
+</html>
